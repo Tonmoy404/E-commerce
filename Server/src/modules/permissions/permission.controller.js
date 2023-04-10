@@ -98,3 +98,4 @@ async function deletePermission(req, res) {
 module.exports.createPermission = createPermission;
 module.exports.getPermission = getPermission;
 module.exports.updatePermission = updatePermission;
+module.exports.deletePermission = deletePermission;
