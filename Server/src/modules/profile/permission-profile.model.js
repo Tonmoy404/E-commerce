@@ -8,7 +8,8 @@ const PermissionProfile = sequelize.define("permission-profiles", {
         allowNull: false,
         unique: true,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
     },
     permission_id: {
         type: DataTypes.UUID

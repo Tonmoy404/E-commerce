@@ -7,6 +7,7 @@ module.exports = () => {
 		let token = null;
 
 		if (req && req.signedCookies) {
+			console.log("------<><>");
 			token = req.headers.authorization.split(" ")[1];
 		}
 		return token;
@@ -16,7 +17,7 @@ module.exports = () => {
 		"user-jwt",
 		new Strategy(
 			{
-				secretOrKey: process.env.JWT_TOKEN,
+				secretOrKey: process.env.JWT_SECRET,
 				jwtFromRequest: cookieExtractor,
 			},
 			async function (payload, done) {

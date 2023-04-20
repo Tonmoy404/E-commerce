@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 const Permission  = sequelize.define("Permission", {
     id: {
         allowNull: false,
-        unique: true,
+        primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
     },
@@ -12,9 +12,9 @@ const Permission  = sequelize.define("Permission", {
         allowNull: false,
         type: DataTypes.STRING
     },
-    services : {
+    description: {
         allowNull: false,
-        type: DataTypes.JSON
+        type: DataTypes.STRING
     },
     created_by: {
         allowNull: false,

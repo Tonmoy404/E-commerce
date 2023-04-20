@@ -9,10 +9,10 @@ const User = sequelize.define("users", {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
     },
-    profile_id:{
-        allowNull: false,
-        type: DataTypes.UUID
-    },
+    // profile_id:{
+    //     allowNull: false,
+    //     type: DataTypes.UUID
+    // },
     firstName: {
         allowNull: false,
         type: DataTypes.UUID
@@ -46,7 +46,7 @@ const User = sequelize.define("users", {
     updatedAt: "updated_by"
 });
 
-User.prototype.validPassword = (password)=>{
+User.prototype.validPassword = function(password){
     return bcrypt.compareSync(password, this.password);
 }
 

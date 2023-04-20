@@ -1,4 +1,6 @@
+const Service = require("../service/service.model");
 const Permission = require("./permission.model");
+const ServicePermission = require("./service_permission.model");
 
 async function createPermission(req, res) {
 	try {
@@ -21,6 +23,29 @@ async function createPermission(req, res) {
 		});
 
 		res.status(201).send(permission);
+	} catch (Err) {
+		console.log(Err);
+		res.status(500).send("Internal Server Error");
+	}
+}
+
+async function getPermissions(req, res) {
+	try {
+		const permission = await Permission.findAll({
+			include: [
+				{
+					model: ServicePermission,
+					as: "ServicePermissions",
+					include: [
+						{
+							model: Service,
+							as: "service",
+						},
+					],
+				},
+			],
+		});
+		return res.status(200).send(permission);
 	} catch (Err) {
 		console.log(Err);
 		res.status(500).send("Internal Server Error");
@@ -99,3 +124,4 @@ module.exports.createPermission = createPermission;
 module.exports.getPermission = getPermission;
 module.exports.updatePermission = updatePermission;
 module.exports.deletePermission = deletePermission;
+module.exports.getPermissions = getPermissions;

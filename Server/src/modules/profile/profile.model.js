@@ -6,7 +6,8 @@ const Profile = sequelize.define("profiles",{
         allowNull: false,
         unique: true,
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
     },
     name: {
         allowNull: false,
@@ -22,10 +23,10 @@ const Profile = sequelize.define("profiles",{
         defaultValue: "custom"
     },
     created_by: {
-        type: DataTypes.UUIDV4
+        type: DataTypes.UUID
     },
     updated_by: {
-        type: DataTypes.UUIDV4
+        type: DataTypes.UUID
     }
 }, {
     tableName: "profiles",

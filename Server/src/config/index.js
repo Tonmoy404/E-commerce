@@ -45,7 +45,7 @@ function initEnvironmentVariables() {
 function getGlobalConfig() {
     const assets = require(path.join(
         process.cwd(),
-        "src/config/assets/default.js"
+        'src/config/assets/default'
     ));
 
     const config = {

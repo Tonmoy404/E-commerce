@@ -1,5 +1,5 @@
 const User = require("./user.model");
-const jwt = require("passport-jwt");
+const jwt = require('jsonwebtoken');
 
 async function createUser(req, res) {
 	try {
@@ -31,7 +31,7 @@ async function logIn(req, res) {
 		const user = await User.findOne({
 			where: { email },
 		});
-
+		console.log(user);
 		if (!user || !user.password || !user.validPassword(password))
 			return res.status(400).send("Invalid Credentials");
 
@@ -52,7 +52,7 @@ async function logIn(req, res) {
 
 		return res.status(200).send(token);
 	} catch (Err) {
-		console.log(Err);
+		console.log("---------->", Err);
 		return res.status(500).send("Internal Server Error");
 	}
 }
