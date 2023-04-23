@@ -2,6 +2,7 @@ const Service = require("../service/service.model");
 const Permission = require("./permission.model");
 const ServicePermission = require("./service_permission.model");
 
+
 async function createPermission(req, res) {
 	try {
 		const { name, services } = req.body;
@@ -35,7 +36,7 @@ async function getPermissions(req, res) {
 			include: [
 				{
 					model: ServicePermission,
-					as: "ServicePermissions",
+					as: "servicePermission",
 					include: [
 						{
 							model: Service,
@@ -45,12 +46,16 @@ async function getPermissions(req, res) {
 				},
 			],
 		});
+
 		return res.status(200).send(permission);
 	} catch (Err) {
 		console.log(Err);
+		console.log("-----hello error-----");
 		res.status(500).send("Internal Server Error");
 	}
 }
+
+
 
 async function getPermission(req, res) {
 	try {

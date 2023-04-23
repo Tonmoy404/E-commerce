@@ -9,10 +9,11 @@ const User = sequelize.define("users", {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
     },
-    // profile_id:{
-    //     allowNull: false,
-    //     type: DataTypes.UUID
-    // },
+    profile_id:{
+        allowNull: false,
+        defaultValue: DataTypes.UUID,
+        type: DataTypes.UUID
+    },
     firstName: {
         allowNull: false,
         type: DataTypes.UUID
@@ -43,7 +44,7 @@ const User = sequelize.define("users", {
     timestamps: true,
     tableName: "users",
     createdAt: "created_at",
-    updatedAt: "updated_by"
+    updatedAt: "updated_at"
 });
 
 User.prototype.validPassword = function(password){

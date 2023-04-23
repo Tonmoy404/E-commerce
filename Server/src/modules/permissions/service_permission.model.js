@@ -24,9 +24,20 @@ const ServicePermission = sequelize.define("service-permission", {
 });
 
 Permission.hasMany(ServicePermission, {
-    as: "permissionServices",
+    as: "servicePermission",
     foreignKey: "permission_id"
 })
+
+// Permission.belongsToMany(Service, {
+//     through: ServicePermission,
+//     as: "services",
+//     foreignKey: "permission_id"
+// })
+
+// Service.hasMany(ServicePermission, {
+//     as: "servicePermission",
+//     foreignKey: "service_id",
+// })
 
 ServicePermission.belongsTo(Service, {
     as: "service",

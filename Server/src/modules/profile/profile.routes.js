@@ -1,11 +1,12 @@
-const { createProfile, updateProfile, findProfile, getProfile, deleteProfile } = require('./profile.controller');
+const { createProfile, updateProfile, findProfile, getProfile, deleteProfile, getprofiles } = require('./profile.controller');
 const { updateProfileSchema, createProfileSchema } = require('./profile.schema');
 const AuthStrategy = require('../Users/user.authentication.middleware');
-const validate = require('../../modules/core/middlewares/validate');
+const validate = require('../core/middlewares/validate');
 
 module.exports = app => {
     app.route('/profiles')
         .post(AuthStrategy, validate(createProfileSchema), createProfile)
+        .get(AuthStrategy, getprofiles)
 
     app.route('/profile/:id')
         .get(AuthStrategy, getProfile)

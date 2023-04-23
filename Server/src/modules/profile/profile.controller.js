@@ -25,6 +25,41 @@ async function createProfile(req, res){
     }
 }
 
+async function getprofiles(req, res) {
+	try {
+		const profiles = await Profile.findAll({
+			include: [
+				{
+					model: PermissionProfile,
+					as: "permissionProfiles",
+					include: [
+						{
+							model: Permission,
+							as: "permission",
+							include: [
+								{
+									model: ServicePermission,
+									as: "servicePermission",
+									include: [
+										{
+											model: Service,
+											as: "service",
+										},
+									],
+								},
+							],
+						},
+					],
+				},
+			],
+		});
+        res.status(200).send(profiles);
+	} catch (err) {
+		console.log(err);
+		res.status(500).send("Internal Server Error");
+	}
+}
+
 async function getProfile(req, res){
     try{
         const { id } = req.params.id;
@@ -104,3 +139,4 @@ module.exports.getProfile = getProfile;
 module.exports.updateProfile = updateProfile;
 module.exports.findProfile = findProfile;
 module.exports.deleteProfile = deleteProfile;
+module.exports.getprofiles = getprofiles;

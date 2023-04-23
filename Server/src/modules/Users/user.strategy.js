@@ -2,14 +2,15 @@ const passport = require("passport");
 const { Strategy } = require("passport-jwt");
 const { findUser } = require("./user.controller");
 
-module.exports = () => {
+module.exports = function() {
 	function cookieExtractor(req) {
 		let token = null;
+		console.log("marker--->", req.headers);
 
-		if (req && req.signedCookies) {
-			console.log("------<><>");
+		if (req && req.headers.authorization) {
 			token = req.headers.authorization.split(" ")[1];
 		}
+		console.log("TOken-----<><>", token);
 		return token;
 	}
 
@@ -21,7 +22,9 @@ module.exports = () => {
 				jwtFromRequest: cookieExtractor,
 			},
 			async function (payload, done) {
-				const user = await findUser(payload.email);
+				console.log("----payload", payload)
+				console.log("Payload Id ---->", payload.id);
+				const user = await findUser(payload.id);
 				if (!user) return done(null, false);
 
 				done(null, user);

@@ -1,11 +1,16 @@
 const passport = require('passport');
 
 function AuthStrategy(req, res, next){
-    const Auth = passport.authenticate("user-jwt", (err, user)=>{
+    console.log("------asche----")
+
+    const Auth = passport.authenticate("user-jwt", (err, user) => {
+        
         if(err){
-            console.log(err);
+            console.log("the error---->", err);
             res.status(500).send("Internal Server Error");
         }
+
+        console.log("User------->", user);
 
         if(!user) return res.status(400).send("Unauthenticated User");
 

@@ -31,7 +31,7 @@ async function logIn(req, res) {
 		const user = await User.findOne({
 			where: { email },
 		});
-		console.log(user);
+		console.log("The user-->", user);
 		if (!user || !user.password || !user.validPassword(password))
 			return res.status(400).send("Invalid Credentials");
 
@@ -45,7 +45,8 @@ async function logIn(req, res) {
 			process.env.JWT_SECRET,
 			{ expiresIn: "1h", issuer: user.email }
 		);
-
+		
+		console.log("nice token--->", token);
 		res.cookie("access_token", token, {
 			httpOnly: true,
 		});
@@ -86,10 +87,10 @@ async function updateUser(req, res) {
     }
 }
 
-async function findUser(email) {
+async function findUser(id) {
 	try {
 		const user = await User.findOne({
-			where: { email },
+			where: { id },
 		});
 		return user;
 	} catch (Err) {
