@@ -1,5 +1,6 @@
 const User = require("./user.model");
 const jwt = require('jsonwebtoken');
+const { send } = require('../../config/lib/email-service/email.service')
 
 async function createUser(req, res) {
 	try {
@@ -17,11 +18,46 @@ async function createUser(req, res) {
 			password,
 		});
 
+		const options = {
+			to: email,
+			subjct: "Greetings",
+			text: "Thanks for Creating Account",
+			html: "<b> Thanks for Creating Account </b>"
+
+		}
+		await send(options);
+
 		return res.status(201).send(user);
 	} catch (err) {
 		console.log(err);
 		return res.status(500).send("Internal Server Error");
 	}
+}
+
+async function getUsers(req, res){
+	try{
+		console.log("get USSSSSSSSSSSERSSSS");
+		const users = await User.findAll({
+			attributes: { exclude: ["password"]}
+		});
+
+		res.status(200).send(users);
+	}
+	catch(err){
+		console.log(err);
+		res.status(500).send("Internal Server Error");
+	}
+}
+
+async function getUser(req, res){
+	const userId = req.params.id;
+
+	const user = await User.findAll({
+		where: { id: userId }
+	});
+	if(!user) return res.status(404).send("User not found");
+
+	res.status(200).send(user);
 }
 
 async function logIn(req, res) {
@@ -45,13 +81,13 @@ async function logIn(req, res) {
 			process.env.JWT_SECRET,
 			{ expiresIn: "1h", issuer: user.email }
 		);
-		
-		console.log("nice token--->", token);
+		delete user.dataValues.password;
+
 		res.cookie("access_token", token, {
 			httpOnly: true,
 		});
 
-		return res.status(200).send(token);
+		return res.status(200).send(user);
 	} catch (Err) {
 		console.log("---------->", Err);
 		return res.status(500).send("Internal Server Error");
@@ -98,7 +134,23 @@ async function findUser(id) {
 	}
 }
 
+
+async function logOut(req, res){
+	try{
+		res.clearCookie("access_token");
+
+		res.status(200).send("Logout Successfully");
+	}
+	catch(Err){
+		console.log(Err);
+		res.status(500).send("Internal Server Error");
+	}
+}
+
 module.exports.createUser = createUser;
 module.exports.logIn = logIn;
 module.exports.findUser = findUser;
 module.exports.updateUser = updateUser;
+module.exports.getUser = getUser;
+module.exports.getUsers = getUsers;
+module.exports.logOut = logOut;
