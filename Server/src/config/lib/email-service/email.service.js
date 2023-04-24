@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
 
 async function send(options) {
 	try {
-        console.log("Tonmoy");
         options.from = `"E-commerce" <${process.env.EMAIL}>`
 		const info = await transporter.sendMail(options);
 

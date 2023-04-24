@@ -36,7 +36,6 @@ async function createUser(req, res) {
 
 async function getUsers(req, res){
 	try{
-		console.log("get USSSSSSSSSSSERSSSS");
 		const users = await User.findAll({
 			attributes: { exclude: ["password"]}
 		});
